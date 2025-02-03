@@ -18,7 +18,7 @@ export default function CourseTable() {
     { name: 'Thu', icon: Zap },
     { name: 'Fri', icon: Star }
   ]
-  const hours = Array.from({ length: 8 }, (_, i) => i + 9)
+  const hours = Array.from({ length: 8 }, (_, i) => i + 1)
 
   const hasConflict = (course1: Course, course2: Course) => {
     // Check main time slots
@@ -67,7 +67,7 @@ export default function CourseTable() {
     return conflicts
   }, [addedCourses])
 
-  const getCoursesForSlot = (day: string, hour: number) => {
+  const getCoursesForSlot = (day: string, slotNumber: number) => {
     // Convert table day abbreviation to full day name
     const fullDayName = Object.entries({
       'Monday': 'Mon',
@@ -81,15 +81,15 @@ export default function CourseTable() {
 
     const courses = addedCourses.filter(course => {
       const hasMainTime = course.time.some(slot => 
-        slot.day === fullDayName && slot.hour === hour
+        slot.day === fullDayName && slot.hour === slotNumber
       );
       
       const hasLabTime = course.labs.some(lab => 
-        lab.time.some(slot => slot.day === fullDayName && slot.hour === hour)
+        lab.time.some(slot => slot.day === fullDayName && slot.hour === slotNumber)
       );
       
       const hasPracticumTime = course.practicums.some(prac => 
-        prac.time.some(slot => slot.day === fullDayName && slot.hour === hour)
+        prac.time.some(slot => slot.day === fullDayName && slot.hour === slotNumber)
       );
 
       return hasMainTime || hasLabTime || hasPracticumTime;
@@ -98,11 +98,11 @@ export default function CourseTable() {
     // Include hovered course even if not added, but check its time slots
     if (hoveredCourse && !addedCourses.some(c => c.id === hoveredCourse.id)) {
       const isHoveredSlot = hoveredCourse.time.some(slot => 
-        slot.day === fullDayName && slot.hour === hour
+        slot.day === fullDayName && slot.hour === slotNumber
       ) || hoveredCourse.labs.some(lab => 
-        lab.time.some(slot => slot.day === fullDayName && slot.hour === hour)
+        lab.time.some(slot => slot.day === fullDayName && slot.hour === slotNumber)
       ) || hoveredCourse.practicums.some(prac => 
-        prac.time.some(slot => slot.day === fullDayName && slot.hour === hour)
+        prac.time.some(slot => slot.day === fullDayName && slot.hour === slotNumber)
       );
 
       if (isHoveredSlot) {
@@ -142,7 +142,7 @@ export default function CourseTable() {
               className={`${hour % 2 === 0 ? "bg-stone-800" : "bg-stone-900"} border-b border-stone-700 hover:bg-transparent`}
             >
               <TableCell className="text-stone-300 font-medium text-center">
-                {`${hour}:00`}
+                {`${hour + 8}:00`}
               </TableCell>
               {days.map((day) => {
                 const courses = getCoursesForSlot(day.name, hour)

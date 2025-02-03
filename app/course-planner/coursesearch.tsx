@@ -32,9 +32,7 @@ export default function CourseSearch() {
       setSearchResults([])
     } else {
       const filteredCourses = courses.filter(course => 
-        course.id.toLowerCase().includes(query.toLowerCase()) ||
-        course.name.toLowerCase().includes(query.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(query.toLowerCase())
+        course.id.toLowerCase().includes(query.toLowerCase())
       )
       setSearchResults(filteredCourses)
     }
@@ -130,7 +128,7 @@ export default function CourseSearch() {
           ) : (
             searchResults.map(course => (
               <Card 
-                key={course.id} 
+                key={`${course.department}-${course.code}`}
                 className={`overflow-hidden bg-stone-800/30 border-stone-700/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-stone-700/20 ${
                   conflictingCourses.has(course.id) ? 'border-amber-500/50' : ''
                 }`}
