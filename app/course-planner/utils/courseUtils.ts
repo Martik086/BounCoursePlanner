@@ -9,8 +9,8 @@ export function transformJsonCourse(jsonCourse: typeof coursesData.courses[0]): 
     instructor: jsonCourse.instructor,
     time: jsonCourse.time,
     rooms: jsonCourse.rooms,
-    credit: jsonCourse.credit,
-    ects: jsonCourse.ects,
+    credit: jsonCourse.credit ?? 0,
+    ects: jsonCourse.ects ?? 0,
     department: jsonCourse.department,
     labs: jsonCourse.labs,
     practicums: jsonCourse.practicums
